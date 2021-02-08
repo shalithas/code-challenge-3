@@ -5,6 +5,9 @@ import Discover from "./Discover";
 export default function Routes() {
   const [token, setToken] = useState("");
   const [error, setError] = useState(false);
+  const [newReleases, setNewReleases] = useState({});
+  const [featured, setFeatured] = useState({});
+  const [categories, setCategories] = useState({});
   // Get AccessToken
   useEffect(() => {
     const auth = btoa(`${config.api.clientId}:${config.api.clientSecret}`);
@@ -24,7 +27,46 @@ export default function Routes() {
     };
     getToken();
   }, [error]);
+  // Get Data from Spotify
+  useEffect(() => {
+    if (!token) return;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const getAlbum = async (categories) => {
+      const res = await fetch(`${config.api.baseUrl}/browse/${categories}`, {
+        headers,
+      });
+      if (res.status === 401) {
+        throw new Error(res.status);
+      }
+      return res.json();
+    };
 
+    const getData = async () => {
+      try {
+        const [newReleases, featured, categories] = await Promise.all([
+          getAlbum("new-releases"),
+          getAlbum("featured-playlists"),
+          getAlbum("categories"),
+        ]);
+        setNewReleases(newReleases.albums);
+        setFeatured(featured.playlists);
+        setCategories(categories.categories);
+      } catch (error) {
+        if (error.message === "401") {
+          setError(true);
+        }
+      }
+    };
+    getData();
+  }, [token]);
   // Here you'd return an array of routes
-  return <Discover />;
+  return (
+    <Discover
+      featured={featured}
+      newReleases={newReleases}
+      categories={categories}
+    />
+  );
 }

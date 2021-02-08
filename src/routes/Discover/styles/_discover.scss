@@ -3,3 +3,16 @@
     --animate-duration: 1.5s;
   }
 }
+.spotify-connect{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+.spotify-connect > span {
+  color: #00c557;
+  margin-left: 10px;
+  font-size: 20px;
+}

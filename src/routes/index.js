@@ -6,7 +6,7 @@ export default function Routes() {
   const [token, setToken] = useState("");
   const [error, setError] = useState(false);
   const [newReleases, setNewReleases] = useState({});
-  const [featured, setFeatured] = useState({});
+  const [playlists, setPlaylists] = useState({});
   const [categories, setCategories] = useState({});
   // Get AccessToken
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function Routes() {
           getAlbum("categories"),
         ]);
         setNewReleases(newReleases.albums);
-        setFeatured(featured.playlists);
+        setPlaylists(featured.playlists);
         setCategories(categories.categories);
       } catch (error) {
         if (error.message === "401") {
@@ -64,9 +64,9 @@ export default function Routes() {
   // Here you'd return an array of routes
   return (
     <Discover
-      featured={featured}
-      newReleases={newReleases}
-      categories={categories}
+      playlists={playlists.items ?? []}
+      newReleases={newReleases.items ?? []}
+      categories={categories.items ?? []}
     />
   );
 }

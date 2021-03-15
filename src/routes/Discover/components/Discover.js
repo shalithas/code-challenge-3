@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import DiscoverBlock from './DiscoverBlock/components/DiscoverBlock';
 import '../styles/_discover.scss';
+import { connect } from 'react-redux';
+import { getNewReleases, getFeaturedPlaylist, getCategories } from '../../../dispatchers/songs';
 
-export default class Discover extends Component {
+class Discover extends Component {
   constructor() {
     super();
 
@@ -13,8 +15,14 @@ export default class Discover extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.getNewReleases();
+    this.props.getFeaturedPlaylist();
+    this.props.getCategories();
+  }
+
   render() {
-    const { newReleases, playlists, categories } = this.state;
+    const { newReleases, playlists, categories } = this.props;
 
     return (
       <div className="discover">
@@ -25,3 +33,22 @@ export default class Discover extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isFetching: state.isFetching,
+    newReleases: (state.newRelease && state.newRelease.response) || [],
+    playlists: (state.featuredPlayList && state.featuredPlayList.response) || [],
+    categories: (state.categories && state.categories.response) || []
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {    
+    getNewReleases: () => dispatch(getNewReleases()),
+    getFeaturedPlaylist: () => dispatch(getFeaturedPlaylist()),
+    getCategories: () => dispatch(getCategories()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Discover);

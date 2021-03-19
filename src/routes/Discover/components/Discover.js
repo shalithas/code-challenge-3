@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DiscoverBlock from './DiscoverBlock/components/DiscoverBlock';
 import '../styles/_discover.scss';
+import SpootifyService from '../../../utils/SpootifyService';
 
 export default class Discover extends Component {
   constructor() {
@@ -13,6 +14,14 @@ export default class Discover extends Component {
     };
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const {newReleases, featurePlayList, categoriesList} = nextProps;
+    return {
+      newReleases,
+      playlists: featurePlayList,
+      categories: categoriesList,
+    };
+  }
   render() {
     const { newReleases, playlists, categories } = this.state;
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import Discover from './Discover';
+
+import DiscoverContainer from './Discover/containers/DiscoverContainer';
 
 export default function Routes() {
   // Here you'd return an array of routes
-  return <Discover />;
+  return <DiscoverContainer />;
 }

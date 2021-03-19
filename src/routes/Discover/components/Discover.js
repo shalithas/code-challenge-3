@@ -15,7 +15,7 @@ export default class Discover extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {newReleases, featurePlayList, categoriesList} = nextProps;
+    const {newReleases, featurePlayList, categoriesList} = nextProps.discoveryData || {};
     return {
       newReleases,
       playlists: featurePlayList,

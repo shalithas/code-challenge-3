@@ -1,26 +1,21 @@
-export const newReleases = (state = [], action) => {
-    switch(action.type) {
-        case 'NEW_RELEASE':
-            return [...state, ...action.data];
-        default:
-            return state;
-    }
-}
 
-
-export const featurePlayList = (state = [], action) => {
-    switch(action.type) {
-        case 'FEATURE_PLAY_LIST':
-            return [...state, ...action.data];
-        default:
-            return state;
-    }
-}
-
-export const categoriesList = (state = [], action) => {
+export const discoveryData = (state = {}, action) => {
     switch(action.type) {
         case 'CATEGORIES':
-            return [...state, ...action.data];
+            return {
+                ...state,
+                categoriesList: [...action.data]
+            };
+        case 'FEATURE_PLAY_LIST':
+            return {
+                ...state,
+                featurePlayList: [...action.data]
+            };
+        case 'NEW_RELEASE':
+        return {
+            ...state,
+            newReleases: [...action.data]
+        };
         default:
             return state;
     }

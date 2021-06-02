@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import DiscoverBlock from './DiscoverBlock/components/DiscoverBlock';
+import { 
+  getAuthToken, 
+  fetchAllSongs
+} from '../../../services/fetch-palylists';
 import '../styles/_discover.scss';
 
 export default class Discover extends Component {
@@ -11,6 +15,12 @@ export default class Discover extends Component {
       playlists: [],
       categories: []
     };
+  }
+
+  async componentDidMount() {
+    const token = await getAuthToken(); 
+    const songsList = await fetchAllSongs(token);
+    this.setState(songsList);
   }
 
   render() {

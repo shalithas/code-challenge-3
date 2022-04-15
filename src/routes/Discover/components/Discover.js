@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DiscoverBlock from './DiscoverBlock/components/DiscoverBlock';
 import '../styles/_discover.scss';
+import { getNewReleases, getFeaturedPlaylist, getBrowsedGenres } from './displaySongs';
 
 export default class Discover extends Component {
   constructor() {
@@ -11,6 +12,21 @@ export default class Discover extends Component {
       playlists: [],
       categories: []
     };
+  }
+
+  componentDidMount = async () => {
+    //  Getting respective data to be set
+    const releases = await getNewReleases();
+    const featuredPlayLists = await getFeaturedPlaylist();
+    const browsedGenres = await getBrowsedGenres();
+
+    //  Setting State to update the UI
+    this.setState({
+      newReleases: releases,
+      playlists: featuredPlayLists,
+      categories: browsedGenres
+    });
+
   }
 
   render() {

@@ -20,7 +20,7 @@ export default function DiscoverBlock({ text, id, data, imagesKey = 'images' }) 
         <h2>{text}</h2>
         <span />
         {
-          data.length ? (
+          data?.length ? (
             <div className="animate__animated animate__fadeIn">
               <FontAwesomeIcon
                 icon={faChevronLeft}
@@ -35,7 +35,7 @@ export default function DiscoverBlock({ text, id, data, imagesKey = 'images' }) 
         }
       </div>
       <div className="discover-block__row" id={id}>
-        {data.map(({ [imagesKey]: images, name }) => (
+        {data?.map(({ [imagesKey]: images, name }) => (
           <DiscoverItem key={name} images={images} name={name} />
         ))}
       </div>
